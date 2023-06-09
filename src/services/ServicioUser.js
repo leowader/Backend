@@ -1,16 +1,16 @@
 const usuarios = require("../database/userQuery");
-const dotenv = require("dotenv");
 
-const userModel = require("../models/ModelUser");
-const jwt = require("jsonwebtoken");
-dotenv.config();
+
+
+// const jwt = require("jsonwebtoken");
+// dotenv.config();
 const registrarse = async (user) => {
-  const usernuevo = new userModel(user);
+  
   try {
-    usernuevo.password = await usernuevo.ocultar(user.password);
-    const respuesta = await usuarios.registrarse(usernuevo);
-    const token = jwt.sign({ id: usernuevo._id }, process.env.JWT_SECRET); //codificando token
-    return { auth: true, respuesta, token };
+    
+    const respuesta = await usuarios.registrarse(user);
+    // const token = jwt.sign({ id: usernuevo._id }, process.env.JWT_SECRET); //codificando token
+    return respuesta ;
   } catch (error) {
     throw error;
   }

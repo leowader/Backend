@@ -3,7 +3,12 @@ const registrarse = async (user) => {
   try {
     //throw new Error("error de query")
     const respuesta = await userModel.create(user);
-    return respuesta;
+    return {
+      id: respuesta._id,
+      nombreUsuario: respuesta.nombreUsuario,
+      correo: respuesta.correo,
+      createdAt:respuesta.createdAt,
+    };
   } catch (error) {
     console.log(error.message);
     throw { status: 500, message: error.message || error };

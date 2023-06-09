@@ -5,12 +5,19 @@ const userSchema = new Schema(
     nombreUsuario: {
       type: String,
       unique:true,
+      required:true,
+      trim:true,
     },
     correo: {
       type: String,
+      unique:true,
+      required:true,
+      trim:true,
     },
     password: {
       type: String,
+      required:true,
+      trim:true,
     },
   },
   { timestamps: true, versionKey: false }

@@ -2,7 +2,7 @@ const express = require("express");
 const userController =require("../controllers/ControllerUser");
 // import all controllers
 // import SessionController from './app/controllers/SessionController';
-const verificar = require("../controllers/VerificarController");
+const verificar = require("../middlewares/VerificarController");
 const routes = express.Router();
 
 // Add routes
