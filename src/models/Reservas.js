@@ -28,7 +28,7 @@ const reservaSchema = new mongoose.Schema(
         trim: true,
       },
       habitacion: {
-        type: [String],
+        type: String,
         required: true,
         trim: true,
       },
@@ -76,6 +76,10 @@ const reservaSchema = new mongoose.Schema(
         required: true,
         trim: true,
       },
+    },
+    precio: {
+      type: Number,
+      required: true,
     },
   },
   { timestamps: true, versionKey: false }

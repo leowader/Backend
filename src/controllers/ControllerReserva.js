@@ -22,12 +22,13 @@ const getOneReserva = async (req, res) => {
 };
 const createReserva = async (req, res) => {
   try {
-    const { identificador, reservas, contacto,pago } = req.body;
+    const { identificador, reservas, contacto,pago,precio } = req.body;
     const reservaNueva = {
       identificador,
       reservas,
       contacto,
-      pago
+      pago,
+      precio
     };
     console.log("----reserva--:", reservaNueva);
     const crearReserva = await servicioReserva.createReserva(reservaNueva);
@@ -45,7 +46,7 @@ const updateReserva = async (req, res) => {
     const respuesta = await servicioReserva.updateReserva(id, body);
     res
       .status(200)
-      .send({ status: "habitacion actualizada: " + body.nombre, data: respuesta });
+      .send({ status: "Reserva actualizada: " + body.nombre, data: respuesta });
   } catch (error) {
     res
       .status(error.status || 500)
@@ -58,7 +59,7 @@ const deleteReserva = async (req, res) => {
     const respuesta = await servicioReserva.deleteReserva(id);
     res
       .status(200)
-      .send({ status: "usuario eliminado " + id, data: respuesta });
+      .send({ status: "Reserva eliminado " + id, data: respuesta });
   } catch (error) {
     res
       .status(error.status || 500)
