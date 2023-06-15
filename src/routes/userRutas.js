@@ -10,6 +10,7 @@ routes.post("/registrarse", userController.registrarse);
 routes.post("/login", userController.login);
 routes.post("/logout", userController.cerrarSesion);
 routes.get("/miperfil",verificar.verificarToken, userController.perfil);
+routes.get("/verificar",verificar.verificarToken, userController.verificarToken);
 // routes.get("/prueba",verificar.verificarToken,(req,res)=>{
 //     res.send("reseñas")
 // })

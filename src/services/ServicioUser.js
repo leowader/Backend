@@ -30,4 +30,22 @@ const login = async (username, password) => {
     throw eror;
   }
 };
-module.exports = { registrarse, perfil, login };
+const verificarUserName = async (username) => {
+  try {
+    const user = await usuarios.login(username)
+    console.log("usuario login ya existe: ", user);
+    return user;
+  } catch (error) {
+    throw error
+  }
+};
+const verificarToken = async (userid) => {
+  try {
+    const user = await usuarios.perfil(userid)
+
+    return user;
+  } catch (error) {
+    throw error
+  }
+};
+module.exports = { registrarse, perfil, login, verificarUserName,verificarToken };

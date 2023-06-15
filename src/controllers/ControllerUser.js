@@ -1,6 +1,9 @@
 const servicioUser = require("../services/ServicioUser");
 const userModel = require("../models/ModelUser");
 const TokenCreate = require("../libs/CrearToken");
+const dotenv = require("dotenv");
+dotenv.config();
+const jwt = require("jsonwebtoken");
 // const Verificar = require("../libs/VerificarLogin");
 const registrarse = async (req, res, next) => {
   try {
@@ -16,6 +19,12 @@ const registrarse = async (req, res, next) => {
 
     token = await TokenCreate.CrearToken(usernuevo.id);
     const respuesta = await servicioUser.registrarse(usernuevo);
+    const userExiste = await servicioUser.verificarUserName(nombreUsuario);
+    if (userExiste) {
+      return res
+        .status(400)
+        .json({ mensaje: ["el nombre de usuario ya existe"] });
+    }
     console.log("usuario. ", respuesta);
     res.cookie("token", token);
     res.status(200).send(respuesta);
@@ -50,18 +59,30 @@ const perfil = async (req, res, next) => {
     //throw new Error("error en perfil");
     const userid = req.userId;
     const respuesta = await servicioUser.perfil(userid);
-    if(!respuesta){
-      res.status(400).send({ message:"usuario no encontrado" });
-
+    if (!respuesta) {
+      res.status(400).send({ message: "usuario no encontrado" });
     }
-    
+
     res.status(200).send({ status: "ok", data: respuesta });
   } catch (error) {
     next(error);
     // res.send({ status: "failed", data: { error: error.message } || error });
   }
 };
-const cerrarSesion =  (req, res, next) => {
+const verificarToken = async (req, res, next) => {
+  try {
+    const userid = req.userId;
+    const respuesta = await servicioUser.perfil(userid);
+    if (!respuesta) {
+      res.status(400).send({ message: "usuario no encontrado" });
+    }
+
+    res.status(200).send({ status: "ok", data: respuesta });
+  } catch (error) {
+    next(error);
+  }
+};
+const cerrarSesion = (req, res, next) => {
   try {
     res.cookie("token", "", {
       expires: new Date(0),
@@ -72,4 +93,4 @@ const cerrarSesion =  (req, res, next) => {
   }
 };
 
-module.exports = { login, registrarse, perfil, cerrarSesion };
+module.exports = { login, registrarse, perfil, cerrarSesion,verificarToken };
