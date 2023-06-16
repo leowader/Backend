@@ -18,6 +18,17 @@ const getOneReserva = async (id) => {
     throw { status: 500, message: error.message || error };
   }
 };
+const getReservasUser = async (Identificador) => {
+  try {
+    // throw new Error("error de query")
+    const reservas = await reservasModel.find({identificador: Identificador});
+    return reservas;
+  } catch (error) {
+    console.log(error.message);
+    throw { status: 500, message: error.message || error };
+  }
+};
+
 const createReserva = async (habitacion) => {
   try {
     const respuesta = await reservasModel.create(habitacion);
@@ -52,4 +63,5 @@ module.exports = {
   getOneReserva,
   updateReserva,
   deleteReserva,
+  getReservasUser
 };

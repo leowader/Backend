@@ -9,6 +9,16 @@ const getAllReservas = async () => {
     throw error;
   }
 };
+const getReservasUser = async (identificador) => {
+  try {
+    
+    // throw new Error("error desde services");
+    const reservas = await dbReservas.getReservasUser(identificador);
+    return reservas;
+  } catch (error) {
+    throw error;
+  }
+};
 const getOneReserva = async (identificador) => {
   try {
     const reserva = await dbReservas.getOneReserva(identificador);
@@ -49,4 +59,5 @@ module.exports = {
   getOneReserva,
   updateReserva,
   deleteReserva,
+  getReservasUser
 };

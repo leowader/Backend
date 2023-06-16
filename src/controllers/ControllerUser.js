@@ -77,7 +77,7 @@ const verificarToken = async (req, res, next) => {
       res.status(400).send({ message: "usuario no encontrado" });
     }
 
-    res.status(200).send({ status: "ok", data: respuesta });
+    res.status(200).send({ auth: true, usuario: respuesta });
   } catch (error) {
     next(error);
   }
@@ -87,7 +87,8 @@ const cerrarSesion = (req, res, next) => {
     res.cookie("token", "", {
       expires: new Date(0),
     });
-    res.sendStatus(200);
+    console.log("sesion cerrada");
+    res.status(200).send({ status:true });
   } catch (error) {
     next(error);
   }

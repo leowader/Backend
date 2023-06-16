@@ -2,7 +2,19 @@ const servicioReserva = require("../services/ServicioReserva");
 const getAllReservas = async (req, res) => {
   try {
     const reservas = await servicioReserva.getAllReservas();
-    res.json({reservas})
+    res.json(reservas)
+  } catch (error) {
+    res
+      .status(error.status || 500)
+      .send({ status: "failed", data: { error: error.message || error } });
+  }
+};
+const getReservasUser = async (req, res) => {
+  try {
+    const identificador = req.params.id;
+    console.log("identif",typeof identificador);
+    const reservas = await servicioReserva.getReservasUser(identificador.toString());
+    res.json(reservas)
   } catch (error) {
     res
       .status(error.status || 500)
@@ -72,4 +84,5 @@ module.exports = {
   createReserva,
   updateReserva,
   deleteReserva,
+  getReservasUser
 };
