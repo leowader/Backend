@@ -18,13 +18,14 @@ const registrarse = async (req, res, next) => {
     usernuevo.password = await usernuevo.ocultar(usuario.password);
 
     token = await TokenCreate.CrearToken(usernuevo.id);
-    const respuesta = await servicioUser.registrarse(usernuevo);
+    
     const userExiste = await servicioUser.verificarUserName(nombreUsuario);
     if (userExiste) {
       return res
         .status(400)
         .json({ mensaje: ["el nombre de usuario ya existe"] });
     }
+    const respuesta = await servicioUser.registrarse(usernuevo);
     console.log("usuario. ", respuesta);
     res.cookie("token", token);
     res.status(200).send(respuesta);
